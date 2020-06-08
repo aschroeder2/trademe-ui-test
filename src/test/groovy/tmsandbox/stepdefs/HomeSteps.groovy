@@ -1,5 +1,6 @@
 package tmsandbox.stepdefs
 
+import groovy.util.logging.Slf4j
 import io.cucumber.guice.ScenarioScoped
 import com.google.inject.Inject
 import io.cucumber.java.Before
@@ -9,6 +10,7 @@ import org.junit.Assert
 import tmsandbox.pages.HomePage
 
 @ScenarioScoped
+@Slf4j
 class HomeSteps {
     @Inject World world
 
@@ -21,7 +23,10 @@ class HomeSteps {
 
     @When('^I navigate to the (.+)$')
     public void navigateToTradeMePage(page) {
-        world.driver.get(world.testProperties[page])
+        String url = world.testProperties[page]
+
+        log.info('Navigating to page: ' + url)
+        world.driver.get(url)
     }
 
     @Then('^the homepage loads successfully$')
