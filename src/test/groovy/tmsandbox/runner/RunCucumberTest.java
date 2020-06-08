@@ -7,11 +7,8 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 
 @CucumberOptions(
-        plugin = {
-                "html:build/reports/html",
-                "junit:build/reports/cucumber-results.xml"
-        },
         monochrome = true,
+        strict = true,
         features = "src/test/resources/features",
         glue = {"tmsandbox", "stepdefs"}
 )
