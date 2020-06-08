@@ -19,7 +19,25 @@ class UsedCarsSteps {
     }
 
     @Then('^there are (\\d+) available used car brands$')
-    public void countMakes(int expectedMakesCount) {
+    void countMakes(int expectedMakesCount) {
         Assert.assertEquals(expectedMakesCount, searchUsedCars.availableMakesCount())
+    }
+
+    @Then('^the (.+) brand has availability$')
+    void validateMakeAvailable(make) {
+        Assert.assertTrue(searchUsedCars.makeAvailable(make))
+    }
+
+    @Then('^there is (\\d+) (.+) brand vehicle available$')
+    void validateAvailableMakeCount(int expectedCount, make) {
+        Assert.assertEquals(expectedCount, searchUsedCars.countAvailableCarsByMake(make))
+    }
+
+    @Then('^the unavailable brand (.+) is not displayed$')
+    void validateMakeNotDisplayed(unavailableMake) {
+        List availableMakes = searchUsedCars.availableMakes()
+
+        Assert.assertFalse(availableMakes.contains(unavailableMake))
+
     }
 }
