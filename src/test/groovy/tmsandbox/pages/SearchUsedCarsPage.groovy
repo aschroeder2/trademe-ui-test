@@ -12,15 +12,12 @@ class SearchUsedCarsPage {
     }
 
     int availableMakesCount() {
-        List<WebElement> makesTableLinks = driver.findElements(By.cssSelector('table#makeTable a'))
 
-        return makesTableLinks.size()
+        return makesTableLinks().size()
     }
 
     boolean makeAvailable(String make) {
-        List<WebElement> makesTableLinks = driver.findElements(By.cssSelector('table#makeTable a'))
-
-        for (WebElement makeLink : makesTableLinks) {
+        for (WebElement makeLink : makesTableLinks()) {
             String availableMakeName = makeLink.getText()
 
             if (availableMakeName == make) {
@@ -33,23 +30,36 @@ class SearchUsedCarsPage {
     }
 
     int countAvailableCarsByMake(String make) {
-        List<WebElement> makesTableCells = driver.findElements(By.cssSelector('table#makeTable td'))
+        List<WebElement> makesTableCellElems = driver.findElements(By.cssSelector('table#makeTable td *'))
+        int specifiedMakeCarCount
 
-        for (WebElement cell : makesTableCells) {
-            List<WebElement> allCellElements
+        for (WebElement cell : makesTableCellElems) {
+            String cellText = cell.getText()
+
+            if (cellText == make) {
+                int makeCellIndex = makesTableCellElems.indexOf(cell)
+                specifiedMakeCarCount = makesTableCellElems[makeCellIndex + 1].getText()
+                    .replaceAll('\\(', '').replaceAll('\\)', '').toInteger()
+            }
         }
-        0
+
+        return specifiedMakeCarCount
     }
 
     List availableMakes() {
-        List<WebElement> makesTableLinks = driver.findElements(By.cssSelector('table#makeTable a'))
         List availableMakes = []
 
-        for (WebElement makeLink : makesTableLinks) {
+        for (WebElement makeLink : makesTableLinks()) {
             String availableMakeName = makeLink.getText()
             availableMakes.add(availableMakeName)
         }
 
         return availableMakes
+    }
+
+    private List<WebElement> makesTableLinks() {
+        List<WebElement> makesTableLinks = driver.findElements(By.cssSelector('table#makeTable a'))
+
+        return makesTableLinks
     }
 }
