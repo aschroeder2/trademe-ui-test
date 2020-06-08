@@ -35,9 +35,6 @@ class UsedCarsSteps {
 
     @Then('^the unavailable brand (.+) is not displayed$')
     void validateMakeNotDisplayed(unavailableMake) {
-        List availableMakes = searchUsedCars.availableMakes()
-
-        Assert.assertFalse(availableMakes.contains(unavailableMake))
-
+        Assert.assertFalse(searchUsedCars.availableMakes().contains(unavailableMake))
     }
 }
