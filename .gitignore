@@ -9,3 +9,6 @@ build
 
 # Ignore iml file
 trademe-ui-test.iml
+
+# Ignore path directory
+path
